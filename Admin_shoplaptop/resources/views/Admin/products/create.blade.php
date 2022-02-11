@@ -20,19 +20,21 @@
         <div class="row">
          <div class="col-6">
       <form action="{{route('products.store')}} " method="POST" enctype="multipart/form-data">
+     
         <div class="form-group">
           <label >Product Name</label>
           <input type="text" class="form-control" name='name'  placeholder="  Enter product name ">
         </div>
+
         <div class="form-group">
           <label >Avatar </label>
           <input type="file" class="form-control-file" name='image' 
-          placeholder="  Enter product price ">
+          placeholder=" choose image ">
         </div>
         <div class="form-group">
           <label >photo </label>
           <input type="file" class="form-control-file" name='img_path[]' multiple 
-          placeholder="  Enter product price ">
+          placeholder="  Enter choose img ">
         </div>
         <div class="form-group">
           <label >Price Product </label>
@@ -44,6 +46,12 @@
           <label >Ram</label>
           <input type="text" class="form-control" name='ram' 
           placeholder="  Enter product price ">
+        </div>
+
+        <div class="form-group">
+          <label >Cpu </label>
+          <input type="text" class="form-control" name='cpu' 
+          placeholder="  Enter product Cpu ">
         </div>
 
 
@@ -58,12 +66,6 @@
           <select class="form-control tags_select_choose" name ='tag[]' multiple="multiple">
 
           </select>
-        </div>
-
-        <div class="form-group">
-          <label >Cpu </label>
-          <input type="text" class="form-control" name='cpu' 
-          placeholder="  Enter product Cpu ">
         </div>
 
         <label for="sel1"> chọn danh mục :</label>

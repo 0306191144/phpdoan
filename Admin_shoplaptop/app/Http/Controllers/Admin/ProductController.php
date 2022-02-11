@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Stmt\Return_;
 use Storage;
 
+
 class ProductController extends Controller
 {
     use   StorageImage;
@@ -80,7 +81,7 @@ class ProductController extends Controller
                         'name_image' =>  $datauploadfilemuti['name'],
                         'img_path' =>  $datauploadfilemuti['path']
                     ];
-                    $this->productimage::create($datatableimg);
+                    $dataproducts->productImg()->create($datatableimg);
                 }
             }
 
@@ -95,16 +96,74 @@ class ProductController extends Controller
                 ]);
             }
             return redirect()->route('products.index');
-        } catch (\Exception $exeption) {
-            Log::error(message: "message" . $exeption->getMessage() . 'lINE:' . $exeption->getLine());
+        } catch (\Exception $e) {
         }
     }
+
     public function edit($id)
     {
         $product = $this->product->find($id);
-
-        return (view('Admin.product_types.edit', compact('product'), [
+        $htmlOption = $this->getproducttype($product->product_type_id);
+        return (view('Admin.products.edit', compact('product', 'htmlOption'), [
             'title' => 'edit producttype'
         ]));
+    }
+
+
+
+
+
+    public function update($id, Request $request)
+    {
+        try {
+            $dataproduct =
+                [
+                    'name' => $request->name,
+                    'price' => $request->price,
+                    'cpu' => $request->cpu,
+                    'ram' => $request->ram,
+                    'screen' => $request->screen,
+                    'product_type_id' => $request->product_type_id,
+                    'discription' => $request->discription,
+                ];
+
+            $datauploadfile = $this->StroageImgupload($request, fileName: 'image', Path: 'product');
+            if (!empty($datauploadfile)) {
+                $dataproduct['img_path'] = $datauploadfile['path'];
+                $dataproduct['image_name'] = $datauploadfile['name'];
+            }
+
+            $this->product->find($id)->update($dataproduct);
+            $dataproducts = $this->product->find($id);
+
+            if ($request->hasFile(key: 'img_path')) {
+                $this->productimage->where('Product_id', $id)->delete();
+                foreach ($request->img_path as $Imgitem) {
+                    $datauploadfilemuti = $this->StroageImguploadMuti(file: $Imgitem, Path: 'product');
+                    $datatableimg = [
+                        'product_id' => $id,
+                        'name_image' =>  $datauploadfilemuti['name'],
+                        'img_path' =>  $datauploadfilemuti['path']
+                    ];
+                    $dataproducts->productImg()->create($datatableimg);
+                }
+            }
+
+            if (!empty($request->tag)) {
+                foreach ($request->tag as $tagItem) {
+
+                    $datatap = $this->tag::firstOrCreate(['name' => $tagItem]);
+                    $dataIsnd[] = $datatap->id;
+                }
+            }
+            $dataproducts->producttag()->sync($dataIsnd);
+            return redirect()->route('products.index');
+        } catch (\Exception $e) {
+        }
+    }
+    public function delete($id)
+    {
+        $product = $this->product->find($id)->delete();
+        return redirect(route('products.index'));
     }
 }

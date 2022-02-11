@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Facade\Ignition\Tabs\Tab;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,12 +24,13 @@ class Product extends Model
     ];
     public function productImg()
     {
-        return $this->hasMany(ProductImage::class);
+        return $this->hasMany(ProductImage::class, foreignKey: 'product_id');
     }
     public function producttag()
     {
-        return $this->belongsToMany(ProductTag::class);
+        return $this->belongsToMany(Tag::class, table: 'product_tags', foreignPivotKey: 'product_id', relatedPivotKey: 'tag_id');
     }
+
     public function producttype()
     {
         return $this->belongsTo(ProductType::class, foreignKey: 'product_type_id');
