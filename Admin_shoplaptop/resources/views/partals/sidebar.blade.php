@@ -1,4 +1,5 @@
 <!-- Main Sidebar Container -->
+<?php $user = json_decode(Cookie::get('user'));?>
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href=" {{route('Admin.Home')}} " class="brand-link">
@@ -11,10 +12,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="/assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="{{$user->avatar_path}}" style="object-fit: cover; width:30px;height:30px" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="{{route('Admin.Home')}}" class="d-block">Alexander Pierce</a>
+          <a href="{{route('Admin.Home')}}" class="d-block">{{$user->name}}</a>
         </div>
       </div>
 
@@ -60,6 +61,23 @@
                   <i class="nav-icon fas fa-user"></i>
               <p>
                 User
+              </p>
+            </a>
+          </li>
+          {{-- <li class="nav-item">
+            <a href="{{route('orders.index')}}" class="nav-link">
+                  <i class="nav-icon fas fa-user"></i>
+              <p>
+                Order
+              </p>
+            </a>
+          </li> --}}
+
+          <li class="nav-item">
+            <a href="{{route('logout')}}" class="nav-link">
+                  <i class="nav-icon fas fa-times"></i>
+              <p>
+                Logout
               </p>
             </a>
           </li>

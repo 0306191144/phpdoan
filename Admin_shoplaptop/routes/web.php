@@ -7,10 +7,11 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 
 Route::prefix('Admin')->group(function () {
-    Route::get('/login', [LoginController::class, 'index']);
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login/store', [LoginController::class, 'store'])->name('Admin.login');
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 });
-Route::get('/Admin/Home', function () {
+Route::get('/Admin', function () {
     return view('Admin.Home');
 })->name('Admin.Home');
 

@@ -4,6 +4,9 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
+@if (!Cookie::get('user')) <script type="text/javascript">
+  window.location = "{{url('/Admin/login')}}";//here double curly bracket
+</script>@endif
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -15,6 +18,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <div class="wrapper">
 @include("partals.header")
 @include('partals.sidebar')
+
+
 
   @yield('content')
  <!-- Control Sidebar -->
