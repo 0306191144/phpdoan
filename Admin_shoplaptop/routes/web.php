@@ -4,10 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\User\LoginController;
 use App\Http\Controllers\Admin\ProductTypeController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController;
 
-
-Route::get('Admin/login', [LoginController::class, 'index']);
-Route::post('/Admin/login/store', [LoginController::class, 'store'])->name('Admin.login');
+Route::prefix('Admin')->group(function () {
+    Route::get('/login', [LoginController::class, 'index']);
+    Route::post('/login/store', [LoginController::class, 'store'])->name('Admin.login');
+});
 Route::get('/Admin/Home', function () {
     return view('Admin.Home');
 })->name('Admin.Home');
@@ -30,5 +32,13 @@ Route::prefix('Admin')->group(function () {
         Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
         Route::post('/update/{id}', [ProductController::class, 'update'])->name('products.update');
         Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('products.delete');
+    });
+    Route::prefix('users')->group(function () {
+        Route::get('/create', [UserController::class, 'create'])->name('users.create');
+        Route::post('/store', [UserController::class, 'store'])->name('users.store');
+        Route::get('/index', [UserController::class, 'index'])->name('users.index');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+        Route::post('/update/{id}', [UserController::class, 'update'])->name('users.update');
+        Route::get('/delete/{id}', [UserController::class, 'delete'])->name('users.delete');
     });
 });

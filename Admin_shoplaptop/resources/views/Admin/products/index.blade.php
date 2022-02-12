@@ -61,19 +61,11 @@
               </td>
             </tr>
 
-            <tr>
-
-
-
-            </tr>
-
            @endforeach
            
                    </tbody>
         </table>
       </div>
- 
-        
       {{ $productnew->links('pagination::bootstrap-4') }}
      
         <!-- /.row -->
