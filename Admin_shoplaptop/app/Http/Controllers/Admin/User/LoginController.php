@@ -29,34 +29,47 @@ class LoginController extends Controller
         ]));
     }
 
-    public function store(Request $request)
+    public function login(Request $request)
     {
-
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
-
-        $user = User::query()->where('email', $request->email)->first();
-
-        if ($user) {
-            if ($user->password == $request->password) {
-                Cookie::queue(Cookie::make('user', $user, 60));
-                return  redirect()->route('users.index');
+        if (Auth::attempt([
+            "email" => $request->email,
+            "password" => $request->password,
+        ])) {
+            $user = Auth::user();
+            if ($user->isadmin == 1) {
+                Cookie::queue(Cookie::make('user', $user, 600));
+                return redirect()->route('products.index');
             }
+        } else {
+            $request->session()->flash(key: 'error', value: 'email or pass do not have');
+            return  redirect()->route('login');
         }
-        $request->session()->flash(key: 'error', value: 'email or pass do not have');
-        return  redirect()->back();
 
-        // if (Auth::attempt($login, $request->remember)) {
-        //     return  redirect()->route('users.index');
-        // } else {
+        // $user = User::query()->where('email', $request->email)->first();
+        // if ($user) {
+        //     if ($user->password == $request->password) {
+        //         Auth::attempt([
+        //             "email" => $request->email,
+        //             "password" => $request->password,
+        //         ]);
+
+
+        //         Cookie::queue(Cookie::make('user', $user, 60));
+        //         return  redirect()->route('Admin.Home');
+        //     }
         // }
+        // $request->session()->flash(key: 'error', value: 'email or pass do not have');
+        // return  redirect()->route('login');
     }
 
     public function logout()
     {
         Cookie::queue(Cookie::forget('user'));
-        return redirect()->back();
+        Auth::logout();
+        return  redirect()->route('login');
     }
 }

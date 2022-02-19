@@ -69,6 +69,7 @@
           </textarea>
         </div>
 
+
         <div class="form-group">
           <label >Avatar </label>
           <input type="file" class="form-control-file" name='avatar'
@@ -77,6 +78,13 @@
             <div class="row">
              <img width="150" height="100" src=" {{$user->avatar_path}}" alt="">
             </div>
+          </div>
+        </div>
+
+        <div class="col-3">
+          <div class="row">
+           <img width="100" height="150" src=" {{$user->avatar_path}}" alt="">
+           <div id="preview-avatar"></div>
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -89,5 +97,11 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <script src="{{ asset('/assets/dist/js/previewImage.js')}}"></script>
+
+  <script>
+    previewImage("avatar","preview-avatar");
+    previewImage("images","preview-images");
+      </script>
 
 @endsection

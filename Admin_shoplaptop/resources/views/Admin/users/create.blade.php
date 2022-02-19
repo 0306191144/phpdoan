@@ -11,7 +11,7 @@
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    @include('partals.content_header',['name'=>'User', 'key'=>'edit'])
+    @include('partals.content_header',['name'=>'User', 'key'=>'ADD'])
     <!-- /.content-header -->
 
     <!-- Main content -->
@@ -93,13 +93,27 @@
 
         <div class="form-group">
           <label >Avatar </label>
-          <input type="file" class="form-control-file" name='avatar'
+          <input type="file" class="form-control-file" name='avatar' id="avatar"
           placeholder="  Enter user price ">
           @error('avatar')
           <div class=" alert alert-danger">{{$message}}</div>
            @enderror
-        
+           <div class="col-3">
+            <div class="row">
+             <div id="preview-avatar"></div>
+            </div>
+          </div>
         </div>
+        <div class="row">
+          <div class="col-8">
+         
+              <input type="checkbox" name='isadmin' id="isadmin" value="true">
+              <label for="vehicle1">
+              Is admin
+              </label>
+         
+          </div>
+          </div>
        <button type="submit" class="btn btn-primary">Submit</button>
         @csrf
     </form>
@@ -110,5 +124,11 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  <script src="{{ asset('/assets/dist/js/previewImage.js')}}"></script>
+  <script>
+    previewImage("avatar","preview-avatar");
+    previewImage("images","preview-images");
+      </script>
+
 
 @endsection

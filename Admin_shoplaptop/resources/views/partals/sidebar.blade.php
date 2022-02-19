@@ -1,5 +1,7 @@
 <!-- Main Sidebar Container -->
-<?php $user = json_decode(Cookie::get('user'));?>
+ <?php $userauth = json_decode(Cookie::get('user'));?>
+
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href=" {{route('Admin.Home')}} " class="brand-link">
@@ -11,14 +13,23 @@
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        @if($userauth)
         <div class="image">
-          <img src="{{$user->avatar_path}}" style="object-fit: cover; width:30px;height:30px" class="img-circle elevation-2" alt="User Image">
+          <img src="{{$userauth->avatar_path}}" style="object-fit: cover; width:30px;height:30px" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="{{route('Admin.Home')}}" class="d-block">{{$user->name}}</a>
+          <a href="{{route('Admin.Home')}}" class="d-block">{{$userauth->name}}</a>
         </div>
       </div>
-
+      @else
+      <div class="image">
+        <img src="" style="object-fit: cover; width:30px;height:30px" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a href="{{route('Admin.Home')}}" class="d-block">tran duc minh/a>
+      </div>
+    </div>
+      @endif
       <!-- SidebarSearch Form -->
       <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
@@ -64,14 +75,14 @@
               </p>
             </a>
           </li>
-          {{-- <li class="nav-item">
-            <a href="{{route('orders.index')}}" class="nav-link">
+           <li class="nav-item">
+            <a href="{{route('invoices.index')}}" class="nav-link">
                   <i class="nav-icon fas fa-user"></i>
               <p>
                 Order
               </p>
             </a>
-          </li> --}}
+          </li> 
 
           <li class="nav-item">
             <a href="{{route('logout')}}" class="nav-link">

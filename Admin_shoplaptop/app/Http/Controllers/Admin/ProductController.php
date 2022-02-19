@@ -8,14 +8,12 @@ use Illuminate\Http\Request;
 use App\Models\ProductType;
 use App\Models\ProductImage;
 use App\Models\Product;
-use App\Models\Tag;
-use App\Models\ProductTag;
+
 use App\component\Recute;
 use App\Traits\StorageImage;
-use Exception;
-use Illuminate\Support\Facades\Log;
-use PhpParser\Node\Stmt\Return_;
-use Storage;
+
+use Illuminate\Support\Facades\Auth;
+
 
 
 class ProductController extends Controller
@@ -23,14 +21,13 @@ class ProductController extends Controller
     use   StorageImage;
 
 
-    public function __construct(ProductType $product_types, Product $product,  ProductImage $productimage, ProductTag $producttap, Tag $tag)
+    public function __construct(ProductType $product_types, Product $product,  ProductImage $productimage)
     {
         $this->product_types = $product_types;
         $this->product = $product;
         $this->productimage = $productimage;
-        $this->producttap = $producttap;
-        $this->tag = $tag;
     }
+
     public function index()
     {
         $productnew = $this->product->latest()->paginate(5);
@@ -60,7 +57,7 @@ class ProductController extends Controller
             'price' => 'required|integer',
             'product_type_id' => 'required',
             'image' => 'required',
-            'tag' => 'required'
+
         ]);
         try {
 
@@ -92,17 +89,6 @@ class ProductController extends Controller
                     $dataproducts->productImg()->create($datatableimg);
                 }
             }
-
-
-            foreach ($request->tag as $tagItem) {
-
-                $datatap = $this->tag::firstOrCreate(['name' => $tagItem]);
-
-                $this->producttap::create([
-                    'tag_id' => $datatap->id,
-                    'product_id' => $dataproducts->id
-                ]);
-            }
             return redirect()->route('products.index');
         } catch (\Exception $e) {
         }
@@ -116,11 +102,6 @@ class ProductController extends Controller
             'title' => 'edit producttype'
         ]));
     }
-
-
-
-
-
     public function update($id, Request $request)
     {
         try {
@@ -157,14 +138,6 @@ class ProductController extends Controller
                 }
             }
 
-            if (!empty($request->tag)) {
-                foreach ($request->tag as $tagItem) {
-
-                    $datatap = $this->tag::firstOrCreate(['name' => $tagItem]);
-                    $dataIsnd[] = $datatap->id;
-                }
-            }
-            $dataproducts->producttag()->sync($dataIsnd);
             return redirect()->route('products.index');
         } catch (\Exception $e) {
         }

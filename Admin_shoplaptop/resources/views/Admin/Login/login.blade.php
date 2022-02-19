@@ -19,6 +19,7 @@
       <p class="login-box-msg">Sign in to start your session</p>
       @include('Admin.Login.alter')
       <form action="{{route('Admin.login')}}" method="post">
+        @csrf
         <div class="input-group mb-3">
           <input type="email" name='email' class="form-control" placeholder="Email">
           <div class="input-group-append">
@@ -44,13 +45,14 @@
               </label>
             </div>
           </div>
+          
           <!-- /.col -->
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
           </div>
           <!-- /.col -->
         </div>
-       @csrf
+     
       </form>
   </div>
 </div>

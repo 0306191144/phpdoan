@@ -9,7 +9,7 @@
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->   
-    @include('partals.content_header',['name'=>'product_types', 'key'=>'add'])
+    @include('partals.content_header',['name'=>'Invoice', 'key'=>'List'])
 
     <!-- /.content-header -->
 
@@ -18,38 +18,49 @@
       <div class="container-fluid">
        <div class="row">
           <div class="col-md-12">
-            <a href="{{route('product_types.create' )}}" class="btn btn-success float-right m-2"> Add</a>
+            <a href="#" class="btn btn-success float-right m-2"> Add</a>
           </div>
       <div class="col-md-12">
             <table class="table">
           <thead>
             <tr>
-              <th scope="col">Id</th>
-              <th scope="col">name</th>
+              <th scope="col">InvoiceId</th>
+              <th scope="col">UserId</th>
+              <th scope="col">Name user</th>
+              <th scope="col">Status</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            @foreach ($product_types as $product_type)
+            @foreach ($invoices as $invoice)
             <tr>
-              <th scope="row"> {{ $product_type->id}}</th>
+              <th scope="row"> {{ $invoice->id}}</th>
               <td>
-                {{ $product_type ->name}}
+                {{ $invoice->useriv->id}}
               </td>
               <td>
-                <a href="{{route('product_types.edit',['id'=>$product_type->id])}}" class="btn btn-default">edit</a>
-                <a href="{{route('product_types.delete',['id'=>$product_type->id])}}"class="btn btn-danger">delete</a>
+                {{ $invoice->useriv->name}}
+              </td>
+              <td>
+                <select  class="form-control m-2 btn btn-success"  name='status'>
+                  <option value="0" >ativiti</option>
+                  <option value="1" >ativiti</option>
+                  <option value="2" >ativiti</option>
+                  <option value="3" ></option>
+                </select>
+                {{ $invoice->status}}
+              </td>
+              <td>
+                <a href="{{route('invoices.detail',['id'=>$invoice->id])}}" class="btn btn-success">See</a>
+                <a href="#" class="btn btn-default">edit</a>
+                <a href="#"class="btn btn-danger">delete</a>
               </td>
             </tr>
             @endforeach
           </tbody>
         </table>
       </div>
-      
-      {{ $product_types->links('pagination::bootstrap-4') }}
-        
-      
-     
+      {{ $invoices->links('pagination::bootstrap-4') }}
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>

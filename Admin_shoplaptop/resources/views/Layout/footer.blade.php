@@ -6,17 +6,5 @@
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script>
-    $(function()
-    {
-        $(".tags_select_choose").select2({
-    tags: true,
-    tokenSeparators: [',']
-})
-$(".menu_choose").select2({
-    placeholder: "Select menu",
-    allowClear: true
-});
-    })
-</script>
+
 

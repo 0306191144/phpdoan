@@ -78,35 +78,32 @@
 
         <div class="form-group">
           <label >Avatar </label>
-          <input type="file" class="form-control-file" name='image'
+          <input type="file" id="avatar" class="form-control-file" name='image'
           placeholder="  Enter product price ">
           <div class="col-3">
             <div class="row">
-             <img width="150" height="100" src=" {{$product->img_path}}" alt="">
+             <img width="100" height="150" src=" {{$product->img_path}}" alt="">
+             <div id="preview-avatar"></div>
             </div>
           </div>
         </div>
 
         <div class="form-group">
           <label >photo </label>
-          <input type="file" class="form-control-file" name='img_path[]' multiple 
+          <input type="file" id="images" class="form-control-file" name='img_path[]' multiple 
           placeholder="  Enter product img">
           <div class=" row">
             @foreach ($product->productImg as $item)
-       <img width="150" height="100" src="{{$item->img_path}}" alt="">
+       <img style="margin-right: 0.5rem" width="100" height="150" src="{{$user->avatar_path}}" alt="">
               @endforeach
+
+              
+        </div>
+        <div class="row">
+          <div id="preview-images"></div>
         </div>
 
-        <div class="form-group">
-          <label >Enter Taps </label>
-          <select class="form-control tags_select_choose" name ='tag[]' multiple="multiple">
-         
-           @foreach ($product->producttag as $item)
-           <option selected value="{{$item->id}}">  {{$item->name}}</option>
-           @endforeach
-        
-          </select>
-        </div>
+   >
 
         <label for="sel1"> chọn danh mục cha :</label>
         <select class="form-control m-2" name='product_type_id'>
@@ -125,5 +122,16 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+  <script src="{{ asset('/assets/dist/js/previewImage.js')}}"></script>
+
+  <script>
+
+    previewImage("avatar","preview-avatar");
+    previewImage("images","preview-images");
+    
+    
+    
+      </script>
 
 @endsection

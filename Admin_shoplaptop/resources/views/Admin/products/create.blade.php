@@ -32,8 +32,9 @@
 
         <div class="form-group">
           <label >Avatar </label>
-          <input type="file" class="form-control-file @error('image') is-invalid @enderror" name='image' 
+          <input type="file" class="form-control-file @error('image') is-invalid @enderror" id="avatar" name='image' 
           placeholder=" choose image ">
+          <div id="preview-avatar"></div>
         </div>
         @error('image')
         <div class=" alert alert-danger">{{$message}}</div>
@@ -41,8 +42,12 @@
 
         <div class="form-group">
           <label >photo </label>
-          <input type="file" class="form-control-file " name='img_path[]' multiple 
+          <input type="file" class="form-control-file " id="images" name='img_path[]' multiple 
           placeholder="  Enter choose img ">
+        </div>
+
+        <div id="preview-images">
+
         </div>
 
         <div class="form-group">
@@ -72,17 +77,7 @@
           <input type="text"  value="{{old('screen')}}" class="form-control" name='screen' 
           placeholder="  Enter product Screen  ">
         </div>
-
-        <div class="form-group">
-          <label >Enter Taps </label>
-          <select   class="form-control tags_select_choose " name ='tag[]' multiple="multiple">
-            @error('tag')
-            <div class=" alert alert-danger">{{$message}}</div>
-             @enderror
-          </select>
-        </div>
-        @error('tag')
-
+        @error('screen')
         <div class=" alert alert-danger">{{$message}}</div>
          @enderror
 
@@ -109,4 +104,13 @@
   </div>
   <!-- /.content-wrapper -->
 
+  <script src="{{ asset('/assets/dist/js/previewImage.js')}}"></script>
+  <script>
+
+previewImage("avatar","preview-avatar");
+previewImage("images","preview-images");
+
+
+
+  </script>
 @endsection

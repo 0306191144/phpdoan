@@ -4,9 +4,10 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-@if (!Cookie::get('user')) <script type="text/javascript">
-  window.location = "{{url('/Admin/login')}}";//here double curly bracket
-</script>@endif
+{{-- @if (!Cookie::get('user')) <script type="text/javascript">
+  window.location = "{{url('/Admin/')}}";//here double curly bracket
+</script>@endif --}}
+
 <html lang="en">
 <head>
   <meta charset="utf-8">

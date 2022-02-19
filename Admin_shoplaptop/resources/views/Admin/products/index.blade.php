@@ -41,7 +41,7 @@
             <tr>
               <th scope="row">{{$product->id}}</th>
               <td>  {{$product->name}} </td>
-              <td><img height="100px" width="150px" src="{{asset($product->img_path)}}" alt=""></td>
+              <td><img style="object-fit:cover; height:150px; width:100px;"  src="{{asset($product->img_path)}}" alt=""></td>
 
               <td>  {{$product->ram}} </td>
 

@@ -29,6 +29,7 @@ class User extends Authenticatable
         'gender',
         'email',
         'password',
+        'isadmin'
     ];
 
     /**
@@ -49,4 +50,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function Carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+    public function invoice_u()
+    {
+        return $this->hasMany(Invoice::class, 'user_id', 'id');
+    }
 }

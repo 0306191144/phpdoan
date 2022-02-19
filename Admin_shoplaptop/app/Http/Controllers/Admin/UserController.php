@@ -13,6 +13,7 @@ use App\Models\ProductTag;
 use App\Traits\StorageImage;
 use Illuminate\Support\Facades\Validator;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Stmt\Return_;
@@ -27,6 +28,7 @@ class UserController extends Controller
     }
     public function index()
     {
+
         $usersv = $this->user->latest()->paginate(5);
         return (view('Admin.users.index', compact('usersv'), [
             'title' => 'add product'
@@ -50,6 +52,7 @@ class UserController extends Controller
             'password' => 'required',
             'password_confirmation' => 'required|same:password',
         ]);
+
         try {
             $dataupdates = [
                 'name' => $request->name,
@@ -57,8 +60,12 @@ class UserController extends Controller
                 'adress' => $request->adress,
                 'gender' => $request->gender,
                 'email' => $request->email,
-                'password' => $request->password,
+                'password' => bcrypt($request->password),
             ];
+            if ($request->isadmin == true) {
+                $dataupdate['isadmin'] = ['1'];
+            } else
+                $dataupdate['isadmin'] = ['0'];
 
             $datauploadfile = $this->StroageImgupload($request, fileName: 'avatar', Path: 'user');
             if (!empty($datauploadfile)) {
@@ -94,6 +101,10 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => $request->password,
             ];
+            if ($request->isadmin == true) {
+                $dataupdate['isadmin'] = ['1'];
+            } else
+                $dataupdate['isadmin'] = ['0'];
 
             $datauploadfile = $this->StroageImgupload($request, fileName: 'avatar', Path: 'user');
             if (!empty($datauploadfile)) {

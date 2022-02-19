@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductTagsTable extends Migration
+class CreateStausInvoicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateProductTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_tags', function (Blueprint $table) {
+        Schema::create('staus_invoices', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id');
-            $table->integer('tag_id');
+            $table->string('name_status');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateProductTagsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_tags');
+        Schema::dropIfExists('staus_invoices');
     }
 }
