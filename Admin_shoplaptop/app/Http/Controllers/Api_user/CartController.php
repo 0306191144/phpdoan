@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class CartController extends BaseController
 {
 
@@ -37,12 +36,15 @@ class CartController extends BaseController
         }
         return $this->sendResponse($carts, 'Lấy giỏ hàng thành công.');
     }
+
+
     public function updateCart(Request $request)
     {
         $this->cart::update($request->quantity);
         $cart = Auth::user()->carts;
         return $this->sendResponse($cart, 'update hàng thành công.');
     }
+
     public function removeCart($id)
     {
         $cart = Cart::remove($id);

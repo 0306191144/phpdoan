@@ -52,49 +52,47 @@ class InvoiceController extends BaseController
             $sp->delete();
         }
         $totail = $totail + $request->moneyship;
+
         $invoice_create['totail'] = $this->invoice->create(['totail' => $totail]);
 
         return $this->sendResponse($invoice_create, 'Lấy danh sách đơn hàng thành công.');
     }
 
 
-    public function list_Invoice(Request $request)
+    public function get_list_invoice()
     {
-        $orders = Invoice::query()->where('order_status_id', '=', $request->id)->get();
+
+        $orders = Invoice::query()->where('user_id', '=', Auth::user()->id)->get();
+
         foreach ($orders as $key => $value) {
-            $value['order_status'] = $value->OrderStatus;
+            $value['statusis'] = $value->statusis;
+        }
+        return $this->sendResponse($orders, 'Lấy danh sách đơn hàng thành công.');
+    }
+
+    public function get_status_invoice($id)
+    {
+        $orders = Invoice::query()->where('user_id', Auth::user()->id)->where('status', '=', $id)->get();
+        foreach ($orders as $key => $value) {
+            $value['statusis'] = $value->statusis;
         }
         return $this->sendResponse($orders, 'Lấy danh sách đơn hàng thành công.');
     }
 
 
-    public function updatestaus(Request $request, $id)
+    public function update_status(Request $request, $id)
     {
-        $this->invoices->find($id)->update(['status' => $request->status]);
+
+        Invoice::find($id)->update(['status' => $request->status]);
+        $orders = $this->invoice->find($id);
+        return $this->sendResponse($orders, 'Lấy danh sách đơn hàng thành công.');
     }
 
 
 
     public function delete($id)
     {
-        $this->invoices->find($id)->delete();
-    }
-
-
-    public function gets_invoice($id)
-    {
-        $orders = Invoice::query()->where('order_status_id', Auth::user()->id)->get();
-        foreach ($orders as $key => $value) {
-            $value['statusis'] = $value->statusis;
-        }
-        return $this->sendResponse($orders, 'Lấy danh sách đơn hàng thành công.');
-    }
-    public function get_Status_invoice($id)
-    {
-        $orders = Invoice::query()->where('order_status_id', Auth::user()->id)->where('Status', $id)->get();
-        foreach ($orders as $key => $value) {
-            $value['statusis'] = $value->statusis;
-        }
+        $orders =  Invoice::find($id)->delete();
         return $this->sendResponse($orders, 'Lấy danh sách đơn hàng thành công.');
     }
 }

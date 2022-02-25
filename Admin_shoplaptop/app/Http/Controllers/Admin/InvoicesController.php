@@ -15,6 +15,7 @@ class InvoicesController extends Controller
     }
     public function index()
     {
+
         $invoices = $this->invoice->latest()->paginate(5);
         return  view('Admin.invoices.index', compact('invoices'));
     }
