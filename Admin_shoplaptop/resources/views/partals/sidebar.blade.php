@@ -1,6 +1,11 @@
 <!-- Main Sidebar Container -->
- <?php $userauth = json_decode(Cookie::get('user'));?>
 
+ @php 
+ 
+ $userauth = Auth::user();
+
+
+ @endphp
 
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -52,7 +57,7 @@
             <a href="{{route('product_types.index')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-               Danh sách thư mục 
+              Menu Category
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
@@ -61,7 +66,7 @@
             <a href="{{route('products.index')}}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-               sản phẩm 
+              products 
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>

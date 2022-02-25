@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('ram')->nullable();;
             $table->string('cpu')->nullable();;
             $table->string('img_path')->nullable();;
-            $table->string('screen')->nullable();;
+            $table->string('screen')->nullable();
             $table->integer('price');
             $table->integer('product_type_id');
             $table->string('image_name')->nullable();

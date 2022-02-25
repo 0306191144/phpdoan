@@ -14,7 +14,7 @@
     @include('partals.content_header',['name'=>'User', 'key'=>'edit'])
     <!-- /.content-header -->
 
-    <!-- Main content -->
+    <!-- Main content --> 
     <div class="content">
       <div class="container-fluid">
         <div class="row">
@@ -36,28 +36,38 @@
         </div>
         
         <div class="form-group">
-          <label >Password </label>
+          <label >Password new</label>
           <input type="text" class="form-control" 
            name ='password'
-           value='{{$user->password}}
-           'placeholder="  nhập  tên danh mục  ">
+           type="password"
+           value='{{$user->password}}'
+           placeholder="  password  ">
+        </div>
+        <div class="form-group">
+          <label >Password confirmation </label>
+          <input type="text" class="form-control" 
+           name ='password_confirmation'
+           value='{{$user->password}}'
+           type="password"/>
         </div>
 
         <div class="form-group">
           <label >phone </label>
           <input type="text" class="form-control" 
            name ='phone'
+          
            value='{{$user->phone}}
            'placeholder="  Enter phone  ">
         </div>
 
         <div class="form-group">
-          <label >gender</label>
-          <input type="text" class="form-control" 
-           name ='gender'
-           value='{{$user->gender}}
-           'placeholder="  ENTER SCEEN  ">
-        </div>
+          <label >choose gender:</label>
+        <select name="gender"  class="form-control" >
+          <option value="boy">boy</option>
+          <option value="girl">girl</option>
+        </select>
+      </div>
+
 
         <div class="form-group">
           <label >address </label>
@@ -72,21 +82,21 @@
 
         <div class="form-group">
           <label >Avatar </label>
-          <input type="file" class="form-control-file" name='avatar'
+          <input type="file" class="form-control-file" name='avatar' id="avatar"
           placeholder="  Enter user price ">
           <div class="col-3">
             <div class="row">
-             <img width="150" height="100" src=" {{$user->avatar_path}}" alt="">
+             <div id="preview-avatar"></div>
             </div>
           </div>
-        </div>
 
         <div class="col-3">
           <div class="row">
            <img width="100" height="150" src=" {{$user->avatar_path}}" alt="">
-           <div id="preview-avatar"></div>
           </div>
         </div>
+       
+      </div>
         <button type="submit" class="btn btn-primary">Submit</button>
         @csrf
 </form>

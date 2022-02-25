@@ -42,44 +42,36 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
-
+        // try {
         $request->validate([
             'name' => 'required',
-            'phone' => 'required',
-            'adress' => 'required',
-            'gender' => 'required',
             'email' => 'required|string|unique:users,email',
             'password' => 'required',
             'password_confirmation' => 'required|same:password',
         ]);
-
-        try {
-            $dataupdates = [
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'adress' => $request->adress,
-                'gender' => $request->gender,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-            ];
-            if ($request->isadmin == true) {
-                $dataupdate['isadmin'] = ['1'];
-            } else
-                $dataupdate['isadmin'] = ['0'];
-
-            $datauploadfile = $this->StroageImgupload($request, fileName: 'avatar', Path: 'user');
-            if (!empty($datauploadfile)) {
-                $dataupdates['avatar_path'] = $datauploadfile['path'];
-                $dataupdates['avatar'] = $datauploadfile['name'];
-            }
-            $this->user->create($dataupdates);
-            return redirect()->route('users.index');
-        } catch (\Exception $e) {
+        $dataupdates = [
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'adress' => $request->adress,
+            'gender' => $request->gender,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ];
+        if ($request->isadmin) {
+            $dataupdates['isadmin'] = true;
+        } else
+            $dataupdates['isadmin'] = false;
+        $datauploadfile = $this->StroageImgupload($request, fileName: 'avatar', Path: 'user');
+        if (!empty($datauploadfile)) {
+            $dataupdates['avatar_path'] = $datauploadfile['path'];
+            $dataupdates['avatar'] = $datauploadfile['name'];
         }
+        $this->user->create($dataupdates);
+
+        return redirect()->route('users.index');
+        // } catch (\Exception $e) {
+        // }
     }
-
-
-
     public function edit($id)
     {
         $user = $this->user->find($id);
@@ -91,30 +83,34 @@ class UserController extends Controller
 
     public function update($id, Request $request)
     {
-        try {
 
-            $dataupdate = [
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'adress' => $request->adress,
-                'gender' => $request->gender,
-                'email' => $request->email,
-                'password' => $request->password,
-            ];
-            if ($request->isadmin == true) {
-                $dataupdate['isadmin'] = ['1'];
-            } else
-                $dataupdate['isadmin'] = ['0'];
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|string|unique:users,email',
+            'password' => 'required',
+            'password_confirmation' => 'required|same:password',
+        ]);
+        $dataupdate = [
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'adress' => $request->adress,
+            'gender' => $request->gender,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ];
+        if ($request->isadmin == 'true') {
+            $dataupdate['isadmin'] = true;
+            dd(Auth::user());
+        } else
+            $dataupdate['isadmin'] = false;
 
-            $datauploadfile = $this->StroageImgupload($request, fileName: 'avatar', Path: 'user');
-            if (!empty($datauploadfile)) {
-                $dataupdate['avatar_path'] = $datauploadfile['path'];
-                $dataupdate['avatar'] = $datauploadfile['name'];
-            }
-            $this->user->find($id)->update($dataupdate);
-            return redirect()->route('users.index');
-        } catch (\Exception $e) {
+        $datauploadfile = $this->StroageImgupload($request, fileName: 'avatar', Path: 'user');
+        if (!empty($datauploadfile)) {
+            $dataupdate['avatar_path'] = $datauploadfile['path'];
+            $dataupdate['avatar'] = $datauploadfile['name'];
         }
+        $this->user->find($id)->update($dataupdate);
+        return redirect()->route('users.index');
     }
     public function delete($id)
     {

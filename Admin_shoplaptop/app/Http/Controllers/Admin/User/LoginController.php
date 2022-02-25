@@ -5,15 +5,9 @@ namespace App\Http\Controllers\Admin\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Models\User;
 
-use Illuminate\Contracts\Session\Session;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session as FacadesSession;
 
-use function PHPUnit\Framework\isEmpty;
 
 class LoginController extends Controller
 {
@@ -41,34 +35,18 @@ class LoginController extends Controller
         ])) {
             $user = Auth::user();
             if ($user->isadmin == 1) {
-                Cookie::queue(Cookie::make('user', $user, 600));
                 return redirect()->route('products.index');
+            } else {
+                return  redirect()->route('login');
             }
         } else {
             $request->session()->flash(key: 'error', value: 'email or pass do not have');
             return  redirect()->route('login');
         }
-
-        // $user = User::query()->where('email', $request->email)->first();
-        // if ($user) {
-        //     if ($user->password == $request->password) {
-        //         Auth::attempt([
-        //             "email" => $request->email,
-        //             "password" => $request->password,
-        //         ]);
-
-
-        //         Cookie::queue(Cookie::make('user', $user, 60));
-        //         return  redirect()->route('Admin.Home');
-        //     }
-        // }
-        // $request->session()->flash(key: 'error', value: 'email or pass do not have');
-        // return  redirect()->route('login');
     }
 
     public function logout()
     {
-        Cookie::queue(Cookie::forget('user'));
         Auth::logout();
         return  redirect()->route('login');
     }

@@ -23,11 +23,12 @@ class CartController extends BaseController
     {
         $addcart = $this->cart->create([
             'user_id' => Auth::user()->id,
-            'product_id' => $this->product->find($id),
-            'quantity' => 1,
+            'product_id' => $id,
+            'quantity' => 110,
         ]);
         return $this->sendResponse($addcart, 'ADD product to cart');
     }
+
     public function getCartByUser()
     {
         $carts = Auth::user()->carts;
@@ -38,10 +39,10 @@ class CartController extends BaseController
     }
     public function updateCart(Request $request)
     {
-        $cart = $this->cart::update($request->quantity);
+        $this->cart::update($request->quantity);
+        $cart = Auth::user()->carts;
         return $this->sendResponse($cart, 'update hàng thành công.');
     }
-
     public function removeCart($id)
     {
         $cart = Cart::remove($id);

@@ -10,6 +10,5 @@ class StausInvoice extends Model
     use HasFactory;
     protected $fillable = [
         'name_status'
-
     ];
 }

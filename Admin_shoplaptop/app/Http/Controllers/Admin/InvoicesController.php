@@ -28,7 +28,6 @@ class InvoicesController extends Controller
         $this->invoice->create(
             [
                 'user_id' => Auth::user()->id,
-                'status' => $request->status,
                 'adressship' => $request->adressship,
                 'phoneship' => $request->phoneship,
                 'dateship' => $request->dateship,
@@ -37,46 +36,30 @@ class InvoicesController extends Controller
         );
         return redirect(route('invoices.index'));
     }
-    public function edit(Request $request, $id)
-    {
 
-        $this->invoice->create(
-            [
-                'user_id' => Auth::user()->id,
-                'status' => $request->status,
-                'adressship' => $request->adressship,
-                'phoneship' => $request->phoneship,
-                'dateship' => $request->dateship,
-                'moneyship' => $request->moneyship,
-            ]
-        );
-        return redirect(route('invoices.index'));
-    }
     public function see_deltail($id)
     {
         $invoice = $this->invoice->find($id);
 
         return view('Admin.invoices.index_detail', compact('invoice'));
     }
-    public function update(Request $request)
+    public function edit(Request $request, $id)
     {
-
-        $this->invoice->create(
+        $invoice = $this->invoice->find($id);
+        return view('Admin.invoices.edit', compact('invoice'));
+    }
+    public function update_status(Request $request)
+    {
+        $this->invoice->upadate(
             [
-                'user_id' => Auth::user()->id,
                 'status' => $request->status,
-                'adressship' => $request->adressship,
-                'phoneship' => $request->phoneship,
-                'dateship' => $request->dateship,
-                'moneyship' => $request->moneyship,
             ]
         );
         return redirect(route('invoices.index'));
     }
-
     public function delete($id)
     {
         $product = $this->invoice->find($id)->delete();
-        return redirect(route('products.index'));
+        return redirect(route('invoice.index'));
     }
 }

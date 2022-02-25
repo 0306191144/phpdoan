@@ -23,13 +23,13 @@ class Invoice extends Model
 
     public function useriv()
     {
-        return $this->belongsTo(User::class,  'user_id', 'id');
+        return $this->belongsTo(User::class, foreignKey: 'user_id');
     }
     public function invoice_detail()
     {
         return $this->hasMany(Invoice_deltail::class, 'invoice_id', 'id');
     }
-    public function status()
+    public function statusis()
     {
         return $this->belongsTo(StausInvoice::class, foreignKey: 'status');
     }

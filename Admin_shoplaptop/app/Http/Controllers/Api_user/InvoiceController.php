@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\Api_user;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Invoice;
 use App\Models\Invoice_deltail;
 use App\Models\Product;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon as SupportCarbon;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api_user\BaseController as BaseController;
 
-class InvoiceController extends Controller
+class InvoiceController extends BaseController
 {
     public function __construct(
         Cart $cart,
@@ -25,12 +23,14 @@ class InvoiceController extends Controller
         $this->invoice_deltail = $invoice_deltail;
         $this->invoice = $invoice;
     }
+
     public function payment(Request $request)
     {
 
         $invoice_create = $this->invoice->create(
             [
-                'user_id' => Auth::user()->id,
+                // 'user_id' => Auth::user()->id,
+                'user_id' => 3,
                 'status' => 1,
                 'nameship' => $request->nameship,
                 'adressship' => $request->addressship,
@@ -38,7 +38,7 @@ class InvoiceController extends Controller
                 'moneyship' => $request->moneyship,
             ]
         );
-        $cart = $this->cart->Where('id', Auth::user()->id);
+        $cart = $this->cart->Where('user_id', '==', 3); // Auth::user()->id);
         $totail = 0;
         foreach ($cart as $sp) {
             $this->invoice_deltail->create([
@@ -47,18 +47,54 @@ class InvoiceController extends Controller
                 'quantity' => $sp->quantity,
                 'price' => $sp->product->price,
             ]);
+
             $totail = $totail + $sp->quantity * $sp->Product->price;
+            $sp->delete();
         }
         $totail = $totail + $request->moneyship;
-        $this->invoice->create(['totail' => $totail]);
+        $invoice_create['totail'] = $this->invoice->create(['totail' => $totail]);
+
+        return $this->sendResponse($invoice_create, 'Lấy danh sách đơn hàng thành công.');
     }
+
+
+    public function list_Invoice(Request $request)
+    {
+        $orders = Invoice::query()->where('order_status_id', '=', $request->id)->get();
+        foreach ($orders as $key => $value) {
+            $value['order_status'] = $value->OrderStatus;
+        }
+        return $this->sendResponse($orders, 'Lấy danh sách đơn hàng thành công.');
+    }
+
 
     public function updatestaus(Request $request, $id)
     {
         $this->invoices->find($id)->update(['status' => $request->status]);
     }
+
+
+
     public function delete($id)
     {
         $this->invoices->find($id)->delete();
+    }
+
+
+    public function gets_invoice($id)
+    {
+        $orders = Invoice::query()->where('order_status_id', Auth::user()->id)->get();
+        foreach ($orders as $key => $value) {
+            $value['statusis'] = $value->statusis;
+        }
+        return $this->sendResponse($orders, 'Lấy danh sách đơn hàng thành công.');
+    }
+    public function get_Status_invoice($id)
+    {
+        $orders = Invoice::query()->where('order_status_id', Auth::user()->id)->where('Status', $id)->get();
+        foreach ($orders as $key => $value) {
+            $value['statusis'] = $value->statusis;
+        }
+        return $this->sendResponse($orders, 'Lấy danh sách đơn hàng thành công.');
     }
 }

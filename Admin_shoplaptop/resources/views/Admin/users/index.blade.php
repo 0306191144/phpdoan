@@ -1,5 +1,6 @@
 @extends('Layout.admin')
 
+
 @section('title')
 
 <title>trang chủ </title>
@@ -32,8 +33,9 @@
               <th scope="col">gender</th>
               <th scope="col">phone</th>
               <th scope="col">address</th>
+              <th scope="col">isadmin</th>
+
               <th scope="col">Action</th>
-              <th scope="col">password</th>
             </tr>
           </thead>
           <tbody>
@@ -47,17 +49,14 @@
               <td>  {{$user->gender}} </td>
               <td>  {{$user->phone}}  </td>
               <td>  {{$user->adress}}   </td>
+            <td>   {{$user->isadmin}} </td>
               <td>
+             
               <a href="{{route('users.edit',['id'=>$user->id])}}" class="btn btn-default">edit</a>
-              <a href="{{route('users.delete',['id'=>$user->id])}}"class="btn btn-danger">delete</a>
+              <button onclick="handleDelete({{$user->id}},'users','delete')" class="btn btn-danger delete-btn">delete</button>
             </td>
-              <td>  {{$user->password}} </td>
             </tr>
-
             <tr>
-
-
-
             </tr>
 
            @endforeach
@@ -75,5 +74,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+  <script src="{{ asset('/assets/dist/js/handleDelete.js')}}"></script>
 
 @endsection

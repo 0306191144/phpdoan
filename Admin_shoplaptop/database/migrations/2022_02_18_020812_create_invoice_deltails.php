@@ -15,10 +15,10 @@ class CreateInvoiceDeltails extends Migration
     {
         Schema::create('invoice_deltails', function (Blueprint $table) {
             $table->id();
-            $table->integer('invoice_id');
-            $table->integer('product_id');
-            $table->integer('quantity');
-            $table->integer('price');
+            $table->integer('invoice_id')->nullable();
+            $table->integer('product_id')->nullable();
+            $table->integer('quantity')->nullable();
+            $table->integer('price')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

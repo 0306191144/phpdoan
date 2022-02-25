@@ -26,10 +26,6 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class, foreignKey: 'product_id');
     }
-    public function producttag()
-    {
-        return $this->belongsToMany(Tag::class, table: 'product_tags', foreignPivotKey: 'product_id', relatedPivotKey: 'tag_id');
-    }
 
     public function producttype()
     {

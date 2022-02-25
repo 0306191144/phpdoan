@@ -36,6 +36,7 @@ class ProductController extends Controller
         ]));
     }
 
+
     public function getproducttype($parent_id)
     {
         $data = $this->product_types->all();

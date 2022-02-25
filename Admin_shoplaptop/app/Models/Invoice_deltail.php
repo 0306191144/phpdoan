@@ -15,12 +15,10 @@ class Invoice_deltail extends Model
         'price',
         'totail',
     ];
-
     public function Invoice()
     {
         return $this->belongsTo(Order::class);
     }
-
     public function product_ivd()
     {
         return $this->belongsTo(Product::class, foreignKey: 'product_id');

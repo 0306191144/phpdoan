@@ -15,7 +15,7 @@ class user_seed extends Seeder
     public function run()
     {
         $data = [
-            'email' => 'admin@dmail.com',
+            'email' => 'admin@gmail.com',
             'password' => bcrypt('admin123'),
             'name' => 'admin'
         ];

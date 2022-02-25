@@ -36,24 +36,19 @@
             <tr>
               <th scope="row"> {{ $invoice->id}}</th>
               <td>
-                {{ $invoice->useriv->id}}
+                {{ $invoice->user_id}}
               </td>
               <td>
-                {{ $invoice->useriv->name}}
+                {{ $invoice->useriv->name}}  
               </td>
+
               <td>
-                <select  class="form-control m-2 btn btn-success"  name='status'>
-                  <option value="0" >ativiti</option>
-                  <option value="1" >ativiti</option>
-                  <option value="2" >ativiti</option>
-                  <option value="3" ></option>
-                </select>
-                {{ $invoice->status}}
+                {{ $invoice->statusis->name_status}}
               </td>
               <td>
                 <a href="{{route('invoices.detail',['id'=>$invoice->id])}}" class="btn btn-success">See</a>
                 <a href="#" class="btn btn-default">edit</a>
-                <a href="#"class="btn btn-danger">delete</a>
+                <a href="{{route('invoices.delete',['id'=>$invoice->id])}}"class="btn btn-danger">delete</a>
               </td>
             </tr>
             @endforeach

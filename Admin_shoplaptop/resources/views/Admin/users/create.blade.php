@@ -20,15 +20,16 @@
         <div class="row">
          <div class="col-6">
    <form action="{{route('users.store')}}" method="POST" enctype="multipart/form-data">
+    @csrf
           <div class="form-group">
-          <label >Name user</label>
-          <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}"
-           name ='name'
-           placeholder="  Enter name user  ">
-            </div>
+             <label >Name user</label>
+              <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{old('name')}}"
+               name ='name'
+               placeholder="  Enter name user  ">
+          </div>
          @error('name')
             <div class=" alert alert-danger">{{$message}}</div>
-        @enderror
+          @enderror
 
         <div class="form-group">
           <label >Email </label>
@@ -37,8 +38,8 @@
            placeholder=" Enter email ">
         </div>
         @error('email')
-        <div class=" alert alert-danger">{{$message}}</div>
-         @enderror
+          <div class=" alert alert-danger">{{$message}}</div>
+        @enderror
 
         <div class="form-group">
           <label >Password </label>
@@ -47,34 +48,32 @@
            placeholder="  Enter password ">
         </div>
         @error('password')
-        <div class=" alert alert-danger">{{$message}}</div>
-         @enderror
+           <div class=" alert alert-danger">{{$message}}</div>
+        @enderror
 
          <div class="form-group">
-          <label >Password confirmation</label>
-          <input type="text" class="form-control" 
-           name ='password_confirmation'
-           placeholder="  enter password confirmation  ">
+            <label >Password confirmation</label>
+            <input type="text" class="form-control" 
+               name ='password_confirmation'
+             placeholder="  enter password confirmation  ">
         </div>
         @error('password_confirmation')
-        <div class=" alert alert-danger">{{$message}}</div>
-         @enderror
+          <div class=" alert alert-danger">{{$message}}</div>
+        @enderror
 
-        <div class="form-group">
-          <label >phone </label>
-          <input type="text" class="form-control" 
-           name ='phone'
-           placeholder="  Enter phone  ">
+        <div class="form-group" >
+          <label >Gender</label>
+        <select class="form-control" name='gender'>
+          <option value="boy"> Boy</option>
+          <option value="girl">Girl</option>
+        </select>
         </div>
-        @error('phone')
-        <div class=" alert alert-danger">{{$message}}</div>
-         @enderror
 
         <div class="form-group">
-          <label >gender</label>
-          <input type="text" class="form-control" 
-           name ='gender'
-           placeholder=" enter gender">
+           <label >phone </label>
+            <input type="text" class="form-control" 
+               name ='phone'
+             placeholder="  Enter phone  ">
         </div>
         @error('phone')
         <div class=" alert alert-danger">{{$message}}</div>
@@ -88,47 +87,51 @@
           </textarea>
         </div>
         @error('adress')
-        <div class=" alert alert-danger">{{$message}}</div>
-         @enderror
+          <div class=" alert alert-danger">{{$message}}</div>
+        @enderror
 
         <div class="form-group">
           <label >Avatar </label>
           <input type="file" class="form-control-file" name='avatar' id="avatar"
           placeholder="  Enter user price ">
+        </div>
+
           @error('avatar')
           <div class=" alert alert-danger">{{$message}}</div>
            @enderror
            <div class="col-3">
-            <div class="row">
-             <div id="preview-avatar"></div>
-            </div>
-          </div>
-        </div>
+             <div class="row">
+                 <div id="preview-avatar"></div>
+              </div>
+           </div>
+    
+
         <div class="row">
           <div class="col-8">
-         
               <input type="checkbox" name='isadmin' id="isadmin" value="true">
               <label for="vehicle1">
-              Is admin
+                    Is admin
               </label>
-         
           </div>
-          </div>
+        </div>
+
+
        <button type="submit" class="btn btn-primary">Submit</button>
-        @csrf
+       
     </form>
-</div>
+    </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
   </div>
+ </div>
   <!-- /.content-wrapper -->
   <script src="{{ asset('/assets/dist/js/previewImage.js')}}"></script>
   <script>
     previewImage("avatar","preview-avatar");
     previewImage("images","preview-images");
-      </script>
+  </script>
 
 
 @endsection
