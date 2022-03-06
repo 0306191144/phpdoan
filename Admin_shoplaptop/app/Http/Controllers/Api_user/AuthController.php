@@ -28,12 +28,17 @@ class AuthController extends BaseController
             "password" => $request->password,
         ])) {
             $user = Auth::user();
+            $token = $user->createToken('MyAuthApp')->plainTextToken;
+            $data = [
+                'user' => $user,
+                'token' => $token
+            ];
             return $this->sendResponse(
-                $user,
+                $data,
                 'login success'
             );
         } else {
-            return $this->sendError('Sai email hoặc mật khẩu', 401);
+            return $this->sendError('Wrong email or password', 401);
         }
     }
 
@@ -54,7 +59,6 @@ class AuthController extends BaseController
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $user = User::where('email', $input['email']);
-        $token = $user->createToken('MyAuthApp')->plainTextToken;
-        return $this->sendResponse($user, $token, 'success register');
+        return $this->sendResponse($user, 'success register');
     }
 }

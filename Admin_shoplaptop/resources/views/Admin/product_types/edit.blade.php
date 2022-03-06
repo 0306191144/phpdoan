@@ -24,8 +24,8 @@
           <label >Tên doanh muc </label>
           <input type="text" class="form-control" 
            name ='name'
-           value='{{$product_type->name}}
-           'placeholder="  nhập  tên danh mục  ">
+           value='{{$product_type->name}}'
+           placeholder=" nhập  tên danh mục  ">
         </div>
         
         <label for="sel1"> chọn danh mục cha :</label>

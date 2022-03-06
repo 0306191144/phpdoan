@@ -57,7 +57,7 @@ class ProductController extends Controller
             'name' => 'required|string',
             'price' => 'required|integer',
             'product_type_id' => 'required',
-            'image' => 'required',
+
 
         ]);
         try {

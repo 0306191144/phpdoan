@@ -23,12 +23,14 @@ class ProductController extends BaseController
             'susecces'
         );
     }
-    public function product_caterory()
+
+    public function list_product_new()
     {
-        $product =  Product::groupBy('produt_type_id')->havingRaw('COUNT(*) > 1')->get();
+        $product = Product::orderby('created_at', 'desc')->take(4)->get();
+
         return $this->sendResponse(
             $product,
-            'give product for product type success'
+            'susecces'
         );
     }
     public function search(Request $request)

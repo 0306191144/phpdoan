@@ -18,12 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/logout', [AuthController::class, 'logout']);
+
 Route::post('/invoice/create', [InvoiceController::class, 'payment']);
 Route::post('/tokens/create', function (Request $request) {
     $token = $request->user()->createToken($request->token_name);
@@ -32,9 +31,15 @@ Route::post('/tokens/create', function (Request $request) {
 
 
 route::get('product/{product}', [ProductController::class, 'show'])->name('Product_show');
-route::get('product/list', [ProductController::class, 'list_product']);
+route::get('products/list', [ProductController::class, 'list_product']);
+route::get('products/list_new', [ProductController::class, 'list_product_new']);
+
+
+
 Route::post('/add/{id}', [CartController::class, 'addToCart']);
 Route::get('/list', [CartController::class, 'getCartByUser']);
+Route::get('/update_cart', [CartController::class, 'getCartByUser']);
+
 Route::post('/invoice/create', [InvoiceController::class, 'payment']);
 Route::get('/get_list_invoice', [InvoiceController::class, 'get_list_invoice']);
 Route::get('/get_status_invoice/{id}', [InvoiceController::class, 'get_status_invoice']);
@@ -62,8 +67,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('product')->group(function () {
-        Route::post('/category/{id}', [CartController::class, 'addToCart']);
-        Route::get('/list_product', [CartController::class, 'getCartByUser']);
+        Route::post('/category/{id}', [ProductController::class, 'addToCart']);
+        Route::get('/list_product', [ProductController::class, 'list_product']);
         Route::get('/update/{id}', [CartController::class, ' update_invoice']);
         Route::post('/delete/{id}', [CartController::class, 'remove_Cart']);
     });
