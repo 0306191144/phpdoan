@@ -23,28 +23,30 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
-Route::post('/invoice/create', [InvoiceController::class, 'payment']);
-Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
-    return ['token' => $token->plainTextToken];
-});
 
 
-route::get('product/{product}', [ProductController::class, 'show'])->name('Product_show');
-route::get('products/list', [ProductController::class, 'list_product']);
-route::get('products/list_new', [ProductController::class, 'list_product_new']);
+// Route::post('/invoice/create', [InvoiceController::class, 'payment']);
+// Route::post('/tokens/create', function (Request $request) {
+//     $token = $request->user()->createToken($request->token_name);
+//     return ['token' => $token->plainTextToken];
+// });
+
+
+// route::get('product/{product}', [ProductController::class, 'show'])->name('Product_show');
+// route::get('products/list', [ProductController::class, 'list_product']);
+// route::get('products/list_new', [ProductController::class, 'list_product_new']);
 
 
 
-Route::post('/add/{id}', [CartController::class, 'addToCart']);
-Route::get('/list', [CartController::class, 'getCartByUser']);
-Route::get('/update_cart', [CartController::class, 'getCartByUser']);
+// Route::post('/add/{id}', [CartController::class, 'addToCart']);
+// Route::get('/list', [CartController::class, 'getCartByUser']);
+// Route::get('/update_cart', [CartController::class, 'getCartByUser']);
 
-Route::post('/invoice/create', [InvoiceController::class, 'payment']);
-Route::get('/get_list_invoice', [InvoiceController::class, 'get_list_invoice']);
-Route::get('/get_status_invoice/{id}', [InvoiceController::class, 'get_status_invoice']);
-Route::get('/invoices/delete/{id}', [InvoiceController::class, 'delete']);
-Route::post('/update_status/{id}', [InvoiceController::class, 'update_status']);
+// Route::post('/invoice/create', [InvoiceController::class, 'payment']);
+// Route::get('/get_list_invoice', [InvoiceController::class, 'get_list_invoice']);
+// Route::get('/get_status_invoice/{id}', [InvoiceController::class, 'get_status_invoice']);
+// Route::get('/invoices/delete/{id}', [InvoiceController::class, 'delete']);
+// Route::post('/update_status/{id}', [InvoiceController::class, 'update_status']);
 
 
 
@@ -67,8 +69,10 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::prefix('product')->group(function () {
-        Route::post('/category/{id}', [ProductController::class, 'addToCart']);
-        Route::get('/list_product', [ProductController::class, 'list_product']);
+        Route::post('/create_cart/{id}', [ProductController::class, 'addToCart']);
+        Route::get('/list_product/new', [ProductController::class, 'list_product_new']); //done
+        Route::get('/list_product', [ProductController::class, 'list_product']); //done
+
         Route::get('/update/{id}', [CartController::class, ' update_invoice']);
         Route::post('/delete/{id}', [CartController::class, 'remove_Cart']);
     });
