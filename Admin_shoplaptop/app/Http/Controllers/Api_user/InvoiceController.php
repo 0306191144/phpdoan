@@ -27,34 +27,27 @@ class InvoiceController extends BaseController
     public function payment(Request $request)
     {
 
-        $invoice_create = $this->invoice->create(
+        $this->invoice->create(
             [
-                // 'user_id' => Auth::user()->id,
-                'user_id' => 3,
+
+                'user_id' => Auth::user()->id,
                 'status' => 1,
                 'nameship' => $request->nameship,
-                'adressship' => $request->addressship,
+                'adressship' => $request->adressship,
                 'phoneship' => $request->phoneship,
-                'moneyship' => $request->moneyship,
+                'moneyship' => 30000,
+                'totail' => $request->totail
             ]
         );
-        $cart = $this->cart->Where('user_id', '==', 3); // Auth::user()->id);
-        $totail = 0;
+        $cart = Auth::user()->carts;
         foreach ($cart as $sp) {
-            $this->invoice_deltail->create([
-                'invoice_id' => $invoice_create->id,
-                'product_id' => $sp->product_id,
-                'quantity' => $sp->quantity,
-                'price' => $sp->product->price,
-            ]);
-
-            $totail = $totail + $sp->quantity * $sp->Product->price;
+            $Data['invoice_id'] = $sp->id;
+            $Data['product_id'] = $sp->product_id;
+            $Data['quantity'] = $sp->quantity;
+            $Data['price'] = $sp->product->price;
+            $invoice_create =  Invoice_deltail::create($Data);
             $sp->delete();
         }
-        $totail = $totail + $request->moneyship;
-
-        $invoice_create['totail'] = $this->invoice->create(['totail' => $totail]);
-
         return $this->sendResponse($invoice_create, 'Lấy danh sách đơn hàng thành công.');
     }
 

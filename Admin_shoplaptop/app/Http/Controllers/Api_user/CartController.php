@@ -18,36 +18,44 @@ class CartController extends BaseController
         $this->product = $product;
         $this->user = $user;
     }
-    public function addToCart($id)
+    public function addToCart(Request $request)
     {
-        $addcart = $this->cart->create([
+        $addcart = Cart::create([
             'user_id' => Auth::user()->id,
-            'product_id' => $id,
-            'quantity' => 110,
+            'product_id' => $request->product_id,
+            'quantity' => 1,
         ]);
+        $addcart['product'] = $addcart->product;
         return $this->sendResponse($addcart, 'ADD product to cart');
     }
 
     public function getCartByUser()
     {
         $carts = Auth::user()->carts;
-        if ($carts == null) {
-            $this->sendResponse($carts, ' giỏ hàng trống');
+
+        for ($i = 0; $i < Count($carts); $i++) {
+            $carts[$i]['product'] = $carts[$i]->product;
         }
-        return $this->sendResponse($carts, 'Lấy giỏ hàng thành công.');
+        return $this->sendResponse($carts, 'Lấy giỏ hàng thành công.');;
     }
 
 
-    public function updateCart(Request $request)
+
+
+    public function updateCart(Request $request, $id)
     {
-        $this->cart::update($request->quantity);
-        $cart = Auth::user()->carts;
-        return $this->sendResponse($cart, 'update hàng thành công.');
+        $cart = Cart::find($id);
+        $cart->quantity = $request['quantity'];
+        $cart->save();
+        $cart['product'] = $cart->product;
+
+        return $this->sendResponse($cart, 'Thành công');
     }
 
     public function removeCart($id)
     {
-        $cart = Cart::remove($id);
+        $cart = Cart::find($id);
+        $cart->delete();
         return $this->sendResponse($cart, 'xoá thành công');
     }
 }

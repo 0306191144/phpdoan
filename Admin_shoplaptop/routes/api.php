@@ -55,12 +55,13 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('cart')->group(function () {
-        Route::post('/add/{id}', [CartController::class, 'addToCart']);
-        Route::get('/list', [CartController::class, 'getCartByUser']);
-        Route::get('/update/{id}', [CartController::class, 'updateCart']);
-        Route::post('/delete{id}', [CartController::class, 'removeCart']);
+        Route::post('/add/{id}', [CartController::class, 'addToCart']); //done
+        Route::get('/list', [CartController::class, 'getCartByUser']); //done
+        Route::post('/update/{id}', [CartController::class, 'updateCart']);
+        Route::get('/delete/{id}', [CartController::class, 'removeCart']);
     });
     Route::prefix('invoice')->group(function () {
+        Route::post('/create', [InvoiceController::class, 'payment']);
         Route::get('/get_list_invoice', [InvoiceController::class, 'get_list_invoice']);
         Route::get('/get_status_invoice/{id}', [InvoiceController::class, 'get_status_invoice']);
         Route::get('/delete/{id}', [InvoiceController::class, 'delete']);
@@ -68,13 +69,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/update_status/{id}', [InvoiceController::class, 'update_status']);
     });
 
-    Route::prefix('product')->group(function () {
-        Route::post('/create_cart/{id}', [ProductController::class, 'addToCart']);
+    Route::prefix('products')->group(function () {
         Route::get('/list_product/new', [ProductController::class, 'list_product_new']); //done
         Route::get('/list_product', [ProductController::class, 'list_product']); //done
-
-        Route::get('/update/{id}', [CartController::class, ' update_invoice']);
-        Route::post('/delete/{id}', [CartController::class, 'remove_Cart']);
     });
     Route::prefix('user')->group(function () {
         Route::post('/update', [CartController::class, 'addToCart']);
